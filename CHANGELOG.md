@@ -1,4 +1,12 @@
-## 1.23.3.0 (2022-1-03)
+## 1.23.6.0 (2022-1-03)
+
+- **Feature** Test Github Bot after switch to main in both branches
+
+## 1.23.5.0 (2022-1-03)
+
+- **Feature** Test Github Bot after switch to main
+
+## 1.23.4.0 (2022-1-03)
 
 - **Feature** Test Github Bot
 
