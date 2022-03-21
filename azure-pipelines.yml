@@ -12,6 +12,13 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
+- task: S3Upload@1
+  inputs:
+    awsCredentials: 'Default'
+    regionName: 'us-west-2'
+    bucketName: 'azdo-test-1'
+    globExpressions: 'root'
+    createBucket: true
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
