@@ -17,7 +17,7 @@ steps:
     awsCredentials: 'Default'
     regionName: 'us-west-2'
     bucketName: 'azdo-test-1'
-    globExpressions: 'root'
+    globExpressions: 'README.md'
     createBucket: true
 
 - script: |
