@@ -24,5 +24,6 @@ steps:
     regionName: 'us-west-2'
     imageSource: 'imageid'
     sourceImageId: 'e04254c4e41a'
-    repositoryName: 'random-target-repo'
+    repositoryName: 'ecr-push-test-repo'
     autoCreateRepository: true
+    removeDockerImage: true
