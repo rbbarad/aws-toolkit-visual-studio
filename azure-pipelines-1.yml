@@ -1,13 +1,4 @@
 # Starter pipeline
-- task: ECRPushImage@1
-  inputs:
-    awsCredentials: 'Default'
-    regionName: 'us-west-2'
-    imageSource: 'imageid'
-    sourceImageId: 'e04254c4e41a'
-    repositoryName: 'new-test-ecr-push-repo'
-    autoCreateRepository: true
-    removeDockerImage: true
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
