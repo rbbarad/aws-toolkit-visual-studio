@@ -17,7 +17,11 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
-
+- task: Docker@2
+  inputs:
+    repository: $(DOCKER_REPOSITORY_NAME)
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
 - task: ECRPullImage@1
   inputs:
     awsCredentials: 'Default'
@@ -26,12 +30,14 @@ steps:
     imageSource: 'imagetag'
     imageTag: '637756376999017153'
   
-# - task: ECRPushImage@1
-#   inputs:
-#     awsCredentials: 'Default'
-#     regionName: 'us-west-2'
-#     imageSource: 'imageid'
-#     sourceImageId: 'e04254c4e41a'
-#     repositoryName: 'ecr-push-test-repo'
-#     autoCreateRepository: true
-#     removeDockerImage: true
+- task: ECRPushImage@1
+  inputs:
+    awsCredentials: 'Default'
+    regionName: 'us-west-2'
+    imageSource: 'imagename'
+    sourceImageName: $(DOCKER_REPOSITORY_NAME)
+    sourceImageTag: $(Build.BuildId)
+    repositoryName: $(DOCKER_REPOSITORY_NAME)
+    pushTag: latest
+    autoCreateRepository: true
+    removeDockerImage: true
