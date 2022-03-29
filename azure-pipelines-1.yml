@@ -17,13 +17,21 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
-  
-- task: ECRPushImage@1
+
+- task: ECRPullImage@1
   inputs:
     awsCredentials: 'Default'
     regionName: 'us-west-2'
-    imageSource: 'imageid'
-    sourceImageId: 'e04254c4e41a'
-    repositoryName: 'ecr-push-test-repo'
-    autoCreateRepository: true
-    removeDockerImage: true
+    repository: 'webapplication18'
+    imageSource: 'imagetag'
+    imageTag: '637756376999017153'
+  
+# - task: ECRPushImage@1
+#   inputs:
+#     awsCredentials: 'Default'
+#     regionName: 'us-west-2'
+#     imageSource: 'imageid'
+#     sourceImageId: 'e04254c4e41a'
+#     repositoryName: 'ecr-push-test-repo'
+#     autoCreateRepository: true
+#     removeDockerImage: true
