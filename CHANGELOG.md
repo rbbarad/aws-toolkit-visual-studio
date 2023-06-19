@@ -1,3 +1,6 @@
+## 2023-6-18
+Rishi bot sync trial
+
 ## 1.23.6.0 (2022-1-03)
 
 - **Feature** Test Github Bot after switch to main in both branches
