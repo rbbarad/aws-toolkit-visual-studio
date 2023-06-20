@@ -1,4 +1,5 @@
 ## 2023-6-19
+1. Final test for logger message
 1. Final test on refactored fix
 1. Fixed it, upping the retry count just in case
 1. Concurrency fix test 2
