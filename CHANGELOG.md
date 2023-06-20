@@ -1,3 +1,6 @@
+## 2023-6-19
+Rishi bot sync trial
+
 ## 2023-6-18
 Rishi bot sync trial
 
