@@ -1,5 +1,7 @@
 ## 2023-6-19
-Rishi bot sync trial
+1. Concurrency fix test
+1. Concurrency push test
+1. Rishi bot sync trial
 
 ## 2023-6-18
 Rishi bot sync trial
