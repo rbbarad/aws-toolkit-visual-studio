@@ -1,26 +1,184 @@
-## 2023-6-19
-1. Final test for logger message
-1. Final test on refactored fix
-1. Fixed it, upping the retry count just in case
-1. Concurrency fix test 2
-1. Concurrency fix test
-1. Concurrency push test
-1. Rishi bot sync trial
+## 1.42.0.0 (2023-06-21)
 
-## 2023-6-18
-Rishi bot sync trial
+- **Deprecation** Removed the dotnetcore3.1 runtime from Lambda deployment dialogs. This runtime has reached end of support. See https://docs.aws.amazon.com/lambda/latest/dg/runtime-support-policy.html for more details.
+- **Feature** AWS Toolkit for Visual Studio is now available as a Preview for Arm64 Visual Studio. We're interested in hearing about your experience using the Toolkit on Arm systems! Share feedback from the banner shown in the AWS Explorer.
 
-## 1.23.6.0 (2022-1-03)
+## 1.41.0.0 (2023-05-30)
 
-- **Feature** Test Github Bot after switch to main in both branches
+- **Bug Fix** Fix issue viewing Beanstalk Environments where the Resources tab would not show details. Health check information is no longer displayed in the load balancer details.
+- **Bug Fix** Entering a local repo path on the CodeCatalyst Clone Repository dialog now validates the path on changes rather than clicking away from the textbox which did not always work consistently depending on where the user clicked.
+- **Bug Fix** Clone CodeCatalyst Repository dialog now only lists repositories that are hosted on CodeCatalyst
+- **Bug Fix** Fix "Unable to get IAM security credentials from EC2 Instance Metadata Service." error when trying to clone CodeCatalyst repos on a system that does not contain a default credentials profile.
+- **Bug Fix** Fixes issue where the AWS Explorer would sometimes show both the connection status and the resource tree at once.
 
-## 1.23.5.0 (2022-1-03)
+## 1.40.0.0 (2023-03-10)
 
-- **Feature** Test Github Bot after switch to main
+- **Feature** Publish to AWS has been updated to use v1.11.6 of the AWS .NET deploy tool. This version fixes an issue where deployed .NET systems would not know the correct heap size. See https://github.com/aws/aws-dotnet-deploy/releases/tag/1.11.6 for more details.
 
-## 1.23.4.0 (2022-1-03)
+## 1.39.0.0 (2023-02-10)
 
-- **Feature** Test Github Bot
+- **Breaking Change** When connecting to AWS IAM Identity Center (formerly AWS SSO) and AWS Builder ID, it is now necessary to copy a user code from the Toolkit login dialog and paste it into the login page that is opened in the browser. This change helps to ensure that the browser-based login request is associated with actions being performed in the Toolkit.
+- **Bug Fix** Before cloning a CodeCatalyst repository, a message is now written to the Output pane stating that a clone will be attempted.
+- **Bug Fix** Loading CloudFormation template projects no longer displays a "Target framework not supported" dialog that attempts to target .NET Framework 4.0. The Toolkit now requires .NET Framework 4.7.2 in order to handle these projects.
+- **Bug Fix** Fixed issue with Lambda project templates having an invalid region specified in appsettings.Development.json file
+- **Bug Fix** AWS IAM Identity Center (AWS SSO) related credentials profiles that are created using the AWS CLI command `aws configure sso` now appear in the Toolkit.
+- **Bug Fix** When an error is displayed on the Clone CodeCatalyst Repository dialog, only the error message is shown rather than all exception details.
+- **Bug Fix** Improves error message detail on CodeCatalyst cloning failures and ensures the proper Output window pane is displayed to show the error details.
+- **Feature** Publish to AWS has been updated to use v1.10.4 of the AWS .NET deploy tool. This version of the Toolkit includes the following Deploy Tool changes:
+  - .NET 6 is now required in order to use the publish experience. .NET Core 3.1 was the previously supported minimum version, but this has reached end of life.
+  - Error messaging has been improved when deployments fail
+  - Security group validations have been improved when publishing to Fargate
+  - See https://github.com/aws/aws-dotnet-deploy/releases for more details.
+
+## 1.38.0.0 (2022-12-02)
+
+- **Feature** Added support for cloning Amazon CodeCatalyst source repositories from Visual Studio's 'Clone a Repository' dialog
+
+## 1.37.0.0 (2022-11-07)
+
+- **Breaking Change** The AWS Toolkit now produces log files for each running instance of Visual Studio. This allows concurrent running instances of Visual Studio to have their own unique Toolkit log file. Previously, the first running instance of Visual Studio would append its logs to the same log file. Log files are now produced in `%localappdata%/AWSToolkit/logs/visualstudio/(VisualStudioVersion)`, and are named based on the date and time when Visual Studio was opened.
+- **Bug Fix** Beanstalk platform versions can now be configured when deploying to existing Beanstalk targets with Publish to AWS.
+- **Bug Fix** Push commands have been updated to use `get-login-password` when viewing an ECR Repository
+- **Bug Fix** Fixed issue where Lambda functions could not be published to regions like GovCloud due to "GetFunctionURLConfig does not exist in (region)" error
+- **Feature** The Toolkit's Logs can now be accessed from the "AWS Toolkit" menu, located in the "Extensions" menu.
+- **Feature** Added support for publishing .NET 7 AOT Lambda functions. To use this, use a Custom Runtime Lambda Project targeting .NET 7, and set the project property `PublishAot` to true
+- **Feature** Added local debugging support for .NET 7 Lambda projects using the Lambda Test Tool.
+- **Feature** The "Publish to AWS" experience is now capable of publishing .NET 7 applications to Beanstalk using self contained build. This is necessary for Beanstalk images that do not support .NET 7.
+- **Feature** Publish to AWS has been updated to use v1.6.4 of the AWS .NET deploy tool. This version of the Toolkit includes the following Deploy Tool changes:
+  - Add support for deploying .NET 7 applications to Elastic Beanstalk
+  - Allow changing Elastic Beanstalk's platform version for environments
+  - See https://github.com/aws/aws-dotnet-deploy/releases/tag/1.6.4 for more details.
+- **Feature** Publish to Beanstalk experience now defaults to using self contained deployment bundles for .NET 7 projects. This setting is necessary for Beanstalk images that do not support .NET 7.
+- **Removal** CloudFormation Template cost estimator has been removed.
+
+## 1.36.0.0 (2022-10-12)
+
+- **Bug Fix** Configuring a Lambda function to remove all Environment Variables and VPC settings from the Configuration tab of the function's view will now do this. Previously, the Lambda function would be updated, but the function's VPC settings and Environment Variables would not be adjusted.
+- **Bug Fix** Update credentials dialog help to link to the User Guide
+- **Bug Fix** Fixed bug so that default location, if set in Options, is used when creating or cloning CodeCommit repos rather than always defaulting to %USERPROFILE%\Source\Repos.
+- **Feature** The "Publish to AWS" experience is now capable of publishing applications to existing Windows Beanstalk environments
+- **Feature** Publish to AWS has been updated to use v1.5.4 of the AWS .NET deploy tool. This version of the Toolkit includes the following Deploy Tool changes:
+  - Applications can now be published to existing Windows Beanstalk environments
+  - Applications can now be published to Fargate using internet-facing load balancers
+  - BlazorWasm applications can now be published with Http3 support
+  - See https://github.com/aws/aws-dotnet-deploy/releases/tag/1.3.7, https://github.com/aws/aws-dotnet-deploy/releases/tag/1.4.10, https://github.com/aws/aws-dotnet-deploy/releases/tag/1.5.4 for more details
+- **Feature** This release of the Toolkit includes an updated signing certificate, which can be seen when installing the extension.
+
+## 1.35.2.0 (2022-08-24)
+
+- **Bug Fix** Categories are now ordered as intended when editing settings in Publish to AWS.
+- **Bug Fix** Publish to AWS has been updated to use v1.2.4 of the AWS .NET deploy tool. This version of the Toolkit includes the following Deploy Tool changes: https://github.com/aws/aws-dotnet-deploy/releases/tag/1.2.4 , https://github.com/aws/aws-dotnet-deploy/releases/tag/1.1.15 .
+- **Bug Fix** A bug has been fixed in Publish to AWS when publishing a project to an existing Fargate target, where the Fargate target was previously published using a pre-GA version of Publish to AWS. If the target was configured with multiple security groups, trying to select it would log an 'Unexpected character encountered while parsing value: s.' error. Now, you can re-publish your project to this target, but you need to reconfigure the security groups setting. The setting will display a validation message in the 'Edit Settings' view if reconfiguration is needed. (Fixed in Deploy Tool v1.1.15)
+- **Bug Fix** Fix issue preventing Publish to AWS from publishing to a Fargate target when working with a region that does not have a default VPC. Previously, this would log an `Unexpected character encountered while parsing value: s. Path '', line 0, position 0` error (Fixed in Deploy Tool v1.2.4)
+- **Feature** Searching CloudWatch log events has been improved, so that filtered events are automatically loaded. Previously, you would have to occasionally click on a link in order to retrieve the first screenful of events.
+
+## 1.35.1.0 (2022-07-25)
+
+- **Bug Fix** CodeArtifact NuGet credential provider has been improved to reduce the amount of times it falls back to a standard basic authentication dialog.
+- **Bug Fix** Fixes bug that attempted to set ACLs on S3 buckets that don't support ACLs.  This was seen in the S3 object browser as an error message from operations such as rename and copy/paste."
+- **Bug Fix** Fix Lambda project template not detecting Node.js tools properly and displaying error message.
+- **Bug Fix** Display error message in Publish to AWS when the Deploy Tool fails to load configuration for a target. This used to leave the Publish button enabled, but it would not do anything.
+- **Bug Fix** Fix bug where AWS Explorer would cause multiple AWS MFA and AWS SSO Login prompts to appear, even when cancelled
+- **Bug Fix** Fixes bug where uploading a file to the root of an S3 Bucket actually uploads to a no-name folder at root.
+- **Bug Fix** Fix issue where downloading a CloudWatch log stream would occasionally never complete.
+
+## 1.35.0.0 (2022-07-05)
+
+- **Feature** The Publish to AWS experience is now generally available
+- **Feature** Publish to AWS has been updated to use v1.0.3 of the AWS .NET deploy tool (https://github.com/aws/aws-dotnet-deploy/releases/tag/1.0.3). This release is also generally available, and includes validation checks for configuring Managed Platform Update times when deploying to Beanstalk.
+
+## 1.34.0.0 (2022-06-30)
+
+- **Breaking Change** Publish to AWS now requires a minimum NodeJs version of 14. Previously, this was 10.
+- **Bug Fix** Fix "Assembly AWSSDK.SSOOIDC could not be found or loaded. This assembly must be available at runtime to use Amazon.Runtime.SSOAWSCredentials" error introduced in Toolkit version 1.32.0.0. This prevented the Toolkit from working with SSO based credentials.
+- **Feature** Publish to AWS is now capable of publishing Elastic Beanstalk running on Windows images
+- **Feature** Publish to AWS has been updated to use v0.50.2 of the AWS .NET deploy tool. This includes https://github.com/aws/aws-dotnet-deploy/releases/tag/0.50.2, https://github.com/aws/aws-dotnet-deploy/releases/tag/0.49.14, and https://github.com/aws/aws-dotnet-deploy/releases/tag/0.48.15
+- **Feature** Add workaround for Publish to AWS when running on a system that has a space in the user profile's path. See https://aws.github.io/aws-dotnet-deploy/docs/getting-started/custom-workspace/ for details
+
+## 1.33.0.0 (2022-06-29)
+
+- **Bug Fix** Fixes issues with navigating, copying, and pasting to/from S3 paths that contain no-name directories.  See https://github.com/aws/aws-toolkit-visual-studio/issues/248
+- **Feature** A link to the Troubleshooting Guide is now shown in the Publish to AWS experience when a deployment fails.
+- **Feature** Amazon CloudWatch Logs Support: View, filter and store CloudWatch Logs resources from the AWS Explorer.
+- **Feature** Added support to view CloudWatch Logs for Lambda functions and ECS Tasks.
+
+## 1.32.0.0 (2022-06-17)
+
+- **Feature** Publish to AWS has been updated to use v0.47.26 of the AWS .NET deploy tool. It contains new validation checks to help prevent deployment failures - https://github.com/aws/aws-dotnet-deploy/releases/tag/0.47.26
+
+## 1.31.0.0 (2022-06-07)
+
+- **Bug Fix** Fix scenario in Publish to AWS where invalid setting values would revert to a previous valid value while the settings were still being edited.
+- **Feature** Adds a Browse button to the Publish to AWS targets that allow for Dockerfile paths. This opens a file dialog to allow the user to browse to and select the Dockerfile to be used in the deployment.
+- **Feature** Add Publish to AWS validation checks for scenarios where a deployment could conflict with existing account resources.
+- **Feature** Add Publish to AWS validations to check that references to existing IAM Roles are not left empty
+
+## 1.30.0.0 (2022-06-01)
+
+- **Bug Fix** Fix issue where clicking different targets in the Publish to AWS experience could show the configuration for an older selection
+- **Bug Fix** Fix issue in Publish to AWS where Docker and Build settings were not used during the publish.
+- **Feature** Add Publish to AWS validation check for scenario where a new deployment would re-use the name of an existing deployment.
+- **Feature** Updated the Publish to AWS view where deployment targets are listed, so that more of the list can be displayed on the screen.
+- **Feature** Updated the Publish to AWS view where deployment settings can be edited. Settings are grouped by category, and a side-bar allows for quick navigation to a category. The width of this view has also been constrained, so that it is easier to work with on systems with a wider display.
+
+## 1.29.0.0 (2022-05-16)
+
+- **Bug Fix** Fix DynamoDB Local connection failure when using a non-basic default credentials profile (SSO or MFA for example)
+- **Bug Fix** Configuring the Lambda publish wizard to remove all VPC subnets and security groups from an existing Lambda will now do this when publishing to Lambda. Previously, the Lambda function would be updated, but the function's VPC settings would not be adjusted.
+- **Feature** The Publish to AWS experience now indicates if the Application Name is not valid, and prevents a deployment from starting.
+- **Feature** Add support for configuring VPC Connectors when publishing to App Runner through the Publish to AWS experience.
+- **Feature** When configuring roles in the Publish to AWS experience, if the publish target requires a service principal, the role selection dialog will only show roles that reference the service principal.
+
+## 1.28.0.0 (2022-04-12)
+
+- **Breaking Change** From this version on, the Toolkit no longer supports Visual Studio 2017.
+- **Bug Fix** Fix problem where dropdown controls would not open, and UI controls would flicker when shown on secondary displays. This mostly affected the Publish to AWS settings screen.
+- **Bug Fix** Fixes case where the Publish to AWS summary screen was unable to open the CloudFormation stack viewer for a profile/region combination that did not match what is currently selected in the AWS Explorer.
+- **Feature** Add support for publishing .NET 6 applications to Linux based Beanstalk images in the Publish to AWS experience
+- **Feature** The Publish To Beanstalk experience no longer defaults to using self-contained deployment bundles when publishing .NET 6 projects to Linux images.
+- **Feature** Publish to AWS experience can now publish images to ECR Repositories
+
+## 1.27.0.0 (2022-03-23)
+
+- **Bug Fix** Editing Beanstalk environment values now ignores entries with empty keys in the Publish to AWS experience.
+- **Bug Fix** Fix Publish Container to AWS wizard so that the Schedule Rule Type is correctly restored as Fixed/Cron with the correct expression.
+- **Bug Fix** Fix showing CloudFormation stack after Publish to AWS completes.
+- **Bug Fix** Fix issue where AWS Explorer button images would not display
+- **Deprecation** An upcoming release will remove support for Visual Studio 2017. An info bar has been added to the Toolkit as a reminder - see https://github.com/aws/aws-toolkit-visual-studio/issues/221 for details.
+- **Feature** The wizard for publishing Lambda projects and Serverless application projects now defaults to the Credentials profile and region from `aws-lambda-tools-defaults.json`. If these values are not found, the current AWS Explorer values are used.
+- **Feature** Added a way to configure the Credentials and region used when publishing with the "Publish to AWS" experience.
+- **Feature** Added menu items to view the '.NET on AWS' and '.NET on AWS Community' websites, available from the "AWS Toolkit" menu, located in the "Extensions" menu ("Tools" menu in Visual Studio 2017)
+
+## 1.26.0.0 (2022-02-23)
+
+- **Bug Fix** Added link to view the Beanstalk environment when publishing to existing Beanstalk environments with the "Publish to AWS" experience
+- **Feature** Add support for publishing Lambda functions using the .NET 6 managed runtime
+- **Feature** Visual Studio 2022 Lambda project blueprints have been updated to target .NET 6.
+
+## 1.25.0.0 (2022-02-17)
+
+- **Bug Fix** The Toolkit Output channel no longer takes focus when credentials profiles are reloaded
+- **Bug Fix** "Publish to AWS" experience now supports new regions like Jakarta
+- **Bug Fix** Fix issue with icons not correctly handling the dark theme in Visual Studio 2022.
+- **Bug Fix** Fixed bug where the "Publish to AWS" experience would not work for users with a space in their Windows profile path
+- **Feature** Beanstalk environment variables can now be configured in the "Publish to AWS" experience
+- **Feature** Added more validation checks to ECS Fargate and App Runner based targets in the Publish to AWS experience
+- **Feature** Menu items for the new (preview) "Publish to AWS" experience and the older publishing experiences are no longer mutually exclusive.
+- **Feature** Improved the "Publish to AWS" experience for configuring EC2 Instance Types by adding a selection dialog.
+- **Feature** The "Publish to AWS" experience is now capable of publishing applications to existing Beanstalk environments
+- **Feature** Added support for credential profiles that use `role_arn` and `credential_source`, where `credential_source = Ec2InstanceMetadata`. This makes it easier to use the Toolkit from within a Windows EC2 instance, since it isn't necessary to place account secrets in the credentials file on the instance.
+
+## 1.24.0.0 (2021-12-20)
+
+- **Bug Fix** Fix issue in the Lambda publish dialog that would prevent it from showing the list of Lambda functions in an account.
+- **Bug Fix** Fix "An update is in progress for resource" failure when publishing NodeJs Lambda functions
+- **Bug Fix** If the new "Publish to AWS" experience has a problem starting up, it attempts to enable the older publishing experience.
+- **Bug Fix** The Toolkit now shows a message if Credentials are not valid when trying to open the new "Publish to AWS" experience.
+- **Feature** Added .NET 6 Lambda container images to the Lambda project blueprints for Visual Studio 2022
+- **Feature** The AWS Toolkit for Visual Studio 2022 is now out of Preview.
+- **Feature** Add support for configuring Lambda Test Tool for .NET 6 projects
+- **Feature** Updated the charts in the Monitoring panel of Beanstalk Environments and CloudFormation stacks. This addresses the "DataVisualization.Charting" error that could happen when trying to view Environments.
+- **Feature** Improved the "Publish to AWS" experience for configuring VPCs and IAM Roles. Existing resources can be selected from a dialog.
 
 ## 1.23.3.0 (2021-11-17)
 
